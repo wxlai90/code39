@@ -65,7 +65,7 @@ const App = () => {
 
   const handleChange = ({ target: { value } }) => {
     const upperValue = value.toUpperCase();
-    const isValidChar = Object.keys(code39Mappings).indexOf(upperValue.substr(-1)) !== -1;
+    const isValidChar = Object.keys(code39Mappings).indexOf(upperValue.substr(-1)) !== -1 || upperValue === '';
     if (isValidChar) setToConvert(upperValue)
   }
 
