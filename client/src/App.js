@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 
@@ -28,14 +28,20 @@ const Container = styled.div`
   flex-direction: row;
 `
 
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 300px;
+`
+
 
 const mapping = {
   0: Slim,
   1: Fat,
   2: Blank
 }
-
-const exampleSequece = [0, 0, 2, 0, 1, 1]
 
 const mapToBlocks = (sequence) => {
   /**
@@ -61,18 +67,45 @@ const StartStopSequence = () => (
 
 const App = () => {
 
+  // 123456 seq
+  const seq = [
+    [1, 0, 2, 0, 0, 1],
+    [0, 1, 2, 0, 0, 1],
+    [1, 1, 2, 0, 0, 0],
+    [0, 0, 2, 1, 0, 1],
+    [1, 0, 2, 1, 0, 0],
+    [0, 1, 2, 1, 0, 0],
+  ]
+
+  // S1234567D
+  const nricSeq = [
+    [0, 1, 0, 1, 2, 0],
+    [1, 0, 2, 0, 0, 1],
+    [0, 1, 2, 0, 0, 1],
+    [1, 1, 2, 0, 0, 0],
+    [0, 0, 2, 1, 0, 1],
+    [1, 0, 2, 1, 0, 0],
+    [0, 1, 2, 1, 0, 0],
+    [0, 0, 2, 0, 1, 1],
+    [0, 0, 1, 2, 0, 1],
+  ]
+
+  const [sequence, setSequence] = useState(seq)
+
   return (
-    <div>
-      App
-      <hr />
+    <MainContainer>
       <Container>
         <StartStopSequence />
         {
-          mapToBlocks(exampleSequece)
+          nricSeq.map(
+            s => (
+              mapToBlocks(s)
+            )
+          )
         }
         <StartStopSequence />
       </Container>
-    </div>
+    </MainContainer>
   )
 }
 
