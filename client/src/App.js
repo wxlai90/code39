@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import code39Mappings from './mappings'
 
 
 const Slim = styled.div`
@@ -55,56 +56,40 @@ const mapToBlocks = (sequence) => {
 
 
 const StartStopSequence = () => (
-  <React.Fragment>
-    <Slim />
-    <Blank />
-    <Slim />
-    <Fat />
-    <Fat />
-    <Slim />
-  </React.Fragment>
+  mapToBlocks(code39Mappings['*'])
 )
 
 const App = () => {
 
-  // 123456 seq
-  const seq = [
-    [1, 0, 2, 0, 0, 1],
-    [0, 1, 2, 0, 0, 1],
-    [1, 1, 2, 0, 0, 0],
-    [0, 0, 2, 1, 0, 1],
-    [1, 0, 2, 1, 0, 0],
-    [0, 1, 2, 1, 0, 0],
-  ]
+  const [toConvert, setToConvert] = useState('')
 
-  // S1234567D
-  const nricSeq = [
-    [0, 1, 0, 1, 2, 0],
-    [1, 0, 2, 0, 0, 1],
-    [0, 1, 2, 0, 0, 1],
-    [1, 1, 2, 0, 0, 0],
-    [0, 0, 2, 1, 0, 1],
-    [1, 0, 2, 1, 0, 0],
-    [0, 1, 2, 1, 0, 0],
-    [0, 0, 2, 0, 1, 1],
-    [0, 0, 1, 2, 0, 1],
-  ]
-
-  const [sequence, setSequence] = useState(seq)
+  const handleChange = ({ target: { value } }) => {
+    const upperValue = value.toUpperCase();
+    const isValidChar = Object.keys(code39Mappings).indexOf(upperValue.substr(-1)) !== -1;
+    if (isValidChar) setToConvert(upperValue)
+  }
 
   return (
     <MainContainer>
       <Container>
         <StartStopSequence />
         {
-          nricSeq.map(
-            s => (
-              mapToBlocks(s)
-            )
+          toConvert.toUpperCase().split('').map(
+            char => {
+              return (
+                mapToBlocks(code39Mappings[char])
+              )
+            }
           )
         }
         <StartStopSequence />
       </Container>
+
+      <h3>Enter something to generate:</h3>
+      <input
+        type="text"
+        value={toConvert}
+        onChange={handleChange} />
     </MainContainer>
   )
 }
