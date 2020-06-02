@@ -19,7 +19,7 @@ const Fat = styled.div`
 
 const Blank = styled.div`
   width: 2px;
-  height: 100px;
+  height: 30px;
   background-color: white;
 `
 
