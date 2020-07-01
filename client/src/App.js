@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import code39Mappings from './mappings'
+import { nricFactory } from './utils/generators'
 
 
 const Slim = styled.div`
@@ -71,7 +72,7 @@ const App = () => {
 
   return (
     <MainContainer>
-      <Container>
+      <Container onClick={() => setToConvert(nricFactory.newNric())}>
         <StartStopSequence />
         {
           toConvert.toUpperCase().split('').map(
@@ -90,6 +91,8 @@ const App = () => {
         type="text"
         value={toConvert}
         onChange={handleChange} />
+
+
     </MainContainer>
   )
 }
